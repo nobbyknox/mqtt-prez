@@ -1,0 +1,14 @@
+{
+    "name": "mqtt-prez",
+    "authors": [
+        "Nobby Knox <nobbyknox@gmail.com>"
+    ],
+    "description": "",
+    "main": "",
+    "license": "MIT",
+    "homepage": "",
+    "private": true,
+    "dependencies": {
+        "reveal.js": "3.3.0"
+    }
+}
