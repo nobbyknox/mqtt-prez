@@ -45,18 +45,53 @@
                     <p>From Wikipedia</p>
                     <blockquote cite="abc">
                         &ldquo;MQTT is an ISO standard (ISO/IEC PRF 20922) publish-subscribe-based
-                        "lightweight" messaging protocol for use on top of the TCP/IP protocol. It
-                        is designed for connections with remote locations where a "small code
-                        footprint" is required or the network bandwidth is limited.&rdquo;
+                        "lightweight" messaging protocol for use on top of the TCP/IP protocol.&rdquo;
                     </blockquote>
                 </section>
 
-				<section>
-					<h2>Hello There</h2>
-					<p>
-						reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
-					</p>
-				</section>
+                <section>
+                    <h2>Design Principles</h2>
+
+                    <ul>
+                        <li>Minimise on-the-wire footprint</li>
+                        <li>Expect and cater for frequent network disruptions</li>
+                        <li>Built for low bandwidth, high latency, unreliable, and high cost networks</li>
+                        <li>Expect that client application have very low processing resources available</li>
+                        <li>Provide traditional qualities of service where the environment allows</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Noteworthy Facts</h2>
+
+                    <ul>
+                        <li>Low complexity and footprint</li>
+                        <li>Simple publish/subscribe messaging semantics</li>
+                        <li>Asynchronous message delivery</li>
+                        <li>Plain byte array message payload</li>
+                        <li>No application message headers</li>
+                        <li>Smallest possible packet size is 2 bytes</li>
+                        <li>Built in constructs to support loss of contact between client and server</li>
+                        <li>Supports fire-and-forget and fire-and-confirm QOS</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h2>Who Uses MQTT?</h2>
+                    
+                    <ul>
+                        <li>Facebook Messenger</li>
+                        <li>UK Rail - track signaling</li>
+                    </ul>
+                    
+                </section>
+
+				<!-- <section> -->
+				<!-- 	<h2>Hello There</h2> -->
+				<!-- 	<p> -->
+				<!-- 		reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do. -->
+				<!-- 	</p> -->
+				<!-- </section> -->
 
 				<!-- Example of nested vertical slides -->
 				<section>
