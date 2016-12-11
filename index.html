@@ -94,6 +94,15 @@
     </section>
 
     <section>
+        <h3>More History</h3>
+
+        <ul>
+            <li>IBM released version 3.1 royalty free in 2010</li>
+            <li>Version 3.1.1 was approved as an official OASIS Standard in 2013</li>
+        </ul>
+    </section>
+
+    <section>
         <p>The inventers set the following goals for the fledgling protocol</p>
     </section>
 
@@ -209,13 +218,13 @@
     </section>
 
     <section>
-        <h3>Would you like to see some code?</h3>
+        <p>Would you like to see some code?</p>
     </section>
 
     <section>
         <h3>Connect and Subscribe to Topic</h3>
 
-        <h4>JavaScript</h4>
+        <p>(JavaScript)</p>
 
         <pre><code>
 var mqtt = new Paho.MQTT.Client(host, port, path, clientId);
@@ -235,7 +244,7 @@ mqtt.connect(options);
     <section>
         <h3>Publish a Message</h3>
 
-        <h4>JavaScript</h4>
+        <p>(JavaScript)</p>
 
         <pre><code>
 function publishMessage(topic, mesg) {
@@ -243,6 +252,28 @@ function publishMessage(topic, mesg) {
     message.destinationName = topic;
     message.qos = 2;
     mqtt.send(message);
+}
+        </code></pre>
+    </section>
+
+    <section>
+        <h3>Receive a Message</h3>
+
+        <p>(JavaScript)</p>
+
+        <pre><code>
+function onMessageArrived(message) {
+
+    var topic = message.destinationName;
+    var payload = message.payloadString;
+
+    console.log('[' + topic + '] ' + payload);
+
+    if (topic === 'something interesting') {
+        // do interesting stuff
+    } else {
+        // do important stuff
+    }
 }
         </code></pre>
     </section>
