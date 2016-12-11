@@ -29,28 +29,52 @@
 <!-- Any section element inside of this container is displayed as a slide -->
 <div class="slides">
 
+    <!--
+        Narrative
+        =========
+
+        Why are we here?
+            To talk about a messaging protocol that is taking the IoT world by storm
+
+        Introducting MQTT - from IBM
+
+        What is it?
+
+        Short history
+
+        Design Principles
+
+        What do we get? (facts)
+
+        Who uses MQTT?
+
+        Can we use it?
+            I think so
+            The upcoming VBX Switchboard (reception console) requires a messaging protocol like this.
+
+        Want to see some code?
+
+        Want to see a demo?
+    -->
+
     <section>
         <img data-src="img/bad-guys.jpg">
     </section>
 
     <section>
+        <h3>Why are we here?</h3>
+
+        <p>
+            To talk about a new(ish) messaging protocol that is taking the IoT world by storm
+        </p>
+    </section>
+
+    <section>
+        <p>Introducting</p>
+
         <h1>MQTT</h1>
-        <h3>What does that even mean?</h3>
-        <p>
-            <small>an introduction</small>
-        </p>
-    </section>
 
-    <section>
-        <p>
-            It came from IBM's <b>MQSeries</b> stable of products and was called <i>MQ Telemetry Transport</i> for a time.
-        </p>
-
-        <p>Not any more. It is now just called <i>MQTT</i>.</p>
-    </section>
-
-    <section>
-        <p>And no, <i>MQ</i> does not stand for <i>message queue</i>.</p>
+        <p>From IBM</p>
     </section>
 
     <section>
@@ -62,17 +86,28 @@
     </section>
 
     <section>
-        <p>But more than that, it was designed to:</p>
+        <h3>Short History</h3>
+
+        <p>
+            It was Andy Stanford-Clark from IBM and Arien Nipper from Cirrus Link that invented MQTT in 1999 for the purpose of connecting oil pipelines over satellite connections using devices with minimal resources and processing capacity. Their use case was to create a protocol for minimal battery loss and minimal bandwidth usage.
+        </p>
+    </section>
+
+    <section>
+        <p>The inventers set the following goals for the fledgling protocol</p>
     </section>
 
     <section>
         <h3>Design Principles</h3>
         <ul>
+            <li>Simple implementation</li>
             <li>Minimise on-the-wire footprint</li>
             <li>Expect and cater for frequent network disruptions</li>
             <li>Built for low bandwidth, high latency, unreliable, and high cost networks</li>
-            <li>Expect that client application have very low processing resources available</li>
-            <li>Provide traditional qualities of service where the environment allows</li>
+            <li>Expect that client applications have very low processing resources available</li>
+            <li>Provide traditional qualities of service</li>
+            <li>Data agnostic</li>
+            <li>Continuous session awareness</li>
         </ul>
     </section>
 
@@ -102,8 +137,9 @@
 
         <ul>
             <li>Facebook Messenger</li>
-            <li>UK Rail</li>
-            <li>Lots of others. TODO: Get a few more</li>
+            <li>UK Rail for track signaling</li>
+            <li>IoT manufacturers are increasingly including MQTT into their products</li>
+            <li>Many other companies / products / projects</li>
         </ul>
 
     </section>
@@ -116,10 +152,6 @@
         </p>
     </section>
 
-    <!-- <section> -->
-    <!--     <p>We'll need to do a few things in the near future...</p> -->
-    <!-- </section> -->
-
     <section>
         <h3>VBX Switchboard</h3>
 
@@ -130,6 +162,13 @@
             <li>Event filtering so that VBX instance agnostic Asterisk events are delivered to the right users in near real-time.</li>
             <li>Communication from users back to a specific VBX and/or Asterisk instance. Tricky if we're running at multiple POPs with many SBCs, but easy with MQTT.</li>
         </ul>
+    </section>
+
+    <section>
+        <p>
+            MQTT fits the bill perfectly and we can start developing the application
+            immediately without worrying about the communications layer
+        </p>
     </section>
 
     <section>
@@ -145,35 +184,72 @@
     </section>
 
     <section>
-        <p>This presentation is only an introduction to MQTT. Feel free to bing for the rest.</p>
+        <p>This presentation is only an introduction to MQTT. Feel free to <i>bing</i> for the rest.</p>
+
+        <p>
+            But, to prick your interest a little more, here are a few findings that are
+            not uncommon when looking for MQTT performance benchmarks.
+        </p>
+    </section>
+
+    <section>
+        <h3>MQTT with SSL vs HTTPS on Android over 3G</h3>
+
+        <p>MQTT was:</p>
+
+        <ul>
+            <li>93 times faster throughput</li>
+            <li>11.89 times less battery to send</li>
+            <li>170.9 times less battery to receive</li>
+            <li>1/2 as much power to keep connections open</li>
+            <li>8 times less network overhead</li>
+        </ul>
+
+        <p><i>https://mobilebit.wordpress.com/2013/05/03/rest-is-for-sleeping-mqtt-is-for-mobile/</i></p>
+    </section>
+
+    <section>
+        <h3>Would you like to see some code?</h3>
+    </section>
+
+    <section>
+        <h3>Connect and Subscribe to Topic</h3>
+
+        <h4>JavaScript</h4>
+
+        <pre><code>
+var mqtt = new Paho.MQTT.Client(host, port, path, clientId);
+
+var options = {
+    timeout: 3,
+    useSSL: true,
+    onSuccess: function() {
+        mqtt.subscribe(topic, { qos: 2 });
+    })
+};
+
+mqtt.connect(options);
+        </code></pre>
+    </section>
+
+    <section>
+        <h3>Publish a Message</h3>
+
+        <h4>JavaScript</h4>
+
+        <pre><code>
+function publishMessage(topic, mesg) {
+    message = new Paho.MQTT.Message(mesg);
+    message.destinationName = topic;
+    message.qos = 2;
+    mqtt.send(message);
+}
+        </code></pre>
     </section>
 
     <section>
         <p>Would you like to see a demo?</p>
     </section>
-
-
-    <!--
-    <section>
-        <h2>Pretty Code</h2>
-        <pre><code class="hljs" data-trim contenteditable>
-function linkify( selector ) {
-    if (supports3DTransforms) {
-
-        var nodes = document.querySelectorAll(selector);
-
-        for (var i = 0, len = nodes.length; i &lt; len; i++) {
-            var node = nodes[i];
-
-            if (!node.className) {
-                node.className += ' roll';
-            }
-        }
-    }
-}
-        </code></pre>
-    </section>
-    -->
 
 </div>
 
