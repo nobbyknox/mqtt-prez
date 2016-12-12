@@ -89,7 +89,11 @@
         <h3>Short History</h3>
 
         <p>
-            It was Andy Stanford-Clark from IBM and Arien Nipper from Cirrus Link that invented MQTT in 1999 for the purpose of connecting oil pipelines over satellite connections using devices with minimal resources and processing capacity. Their use case was to create a protocol for minimal battery loss and minimal bandwidth usage.
+            It was Andy Stanford-Clark from IBM and Arien Nipper from Cirrus Link that
+            invented MQTT in 1999 for the purpose of connecting oil pipelines over
+            satellite connections using devices with minimal resources and processing
+            capacity. Their use case was to create a protocol for minimal battery loss
+            and minimal bandwidth usage.
         </p>
     </section>
 
@@ -157,7 +161,7 @@
         <h3>Why am I telling you all this?</h3>
 
         <p>
-            Because we'll be needing something like this very soon.
+            Because the VBX team will be needing something like this very soon
         </p>
     </section>
 
@@ -167,10 +171,26 @@
         <p>Also called <i>Reception Console</i></p>
 
         <ul>
-            <li>Push events from Asterisk/VBX straight to the user's browser - no polling</li>
-            <li>Event filtering so that VBX instance agnostic Asterisk events are delivered to the right users in near real-time.</li>
+            <li>Push events from Asterisk/VBX straight to the user's browser in near real-time - no polling</li>
+            <li>Event filtering of VBX instance agnostic events from Asterisk for delivery to the right users in near real-time.</li>
             <li>Communication from users back to a specific VBX and/or Asterisk instance. Tricky if we're running at multiple POPs with many SBCs, but easy with MQTT.</li>
         </ul>
+    </section>
+
+    <section>
+        <p>If we wrote the messaging infrastructure ourselves...</p>
+    </section>
+
+    <section>
+        <img src="img/with-current-tools.png"/>
+    </section>
+
+    <section>
+        <p>With MQTT the landscape changes...</p>
+    </section>
+
+    <section>
+        <img src="img/mqtt-solution.png"/>
     </section>
 
     <section>
@@ -178,6 +198,22 @@
             MQTT fits the bill perfectly and we can start developing the application
             immediately without worrying about the communications layer
         </p>
+    </section>
+
+    <section>
+        <h3>Secret Sauce</h3>
+
+        <ul>
+            <li>Quality of Service</li>
+            <li>MQTT clients <i>in</i> the browser</li>
+            <li>Dynamic topics</li>
+        </ul>
+
+        <aside class="notes">
+            Dynamic topics make it possible to move a VBX customer from one server to another
+            and have the local keyhole application unsubscribe from the topic where moved from
+            and the other server subscribe to the topic of the newcomer.
+        </aside>
     </section>
 
     <section>
@@ -204,8 +240,6 @@
     <section>
         <h3>MQTT with SSL vs HTTPS on Android over 3G</h3>
 
-        <p>MQTT was:</p>
-
         <ul>
             <li>93 times faster throughput</li>
             <li>11.89 times less battery to send</li>
@@ -215,6 +249,11 @@
         </ul>
 
         <p><i>https://mobilebit.wordpress.com/2013/05/03/rest-is-for-sleeping-mqtt-is-for-mobile/</i></p>
+
+        <aside class="notes">
+            Take these numbers with a pinch of salt. However the benchmark trends on the web
+            show that MQTT performs very well.
+        </aside>
     </section>
 
     <section>
@@ -234,7 +273,7 @@ var options = {
     useSSL: true,
     onSuccess: function() {
         mqtt.subscribe(topic, { qos: 2 });
-    })
+    }
 };
 
 mqtt.connect(options);
@@ -254,6 +293,14 @@ function publishMessage(topic, mesg) {
     mqtt.send(message);
 }
         </code></pre>
+
+        <aside class="notes">
+            <ul>
+                <li>0 - fire and forger</li>
+                <li>1 - guarantee that message will be delivered at least once</li>
+                <li>2 - guarantee that message will be delivered exactly once</li>
+            </ul>
+        </aside>
     </section>
 
     <section>
